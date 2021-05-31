@@ -1,0 +1,53 @@
+version: '3.1'
+services:
+  mongo:
+    image: mongo:4.4.4
+    container_name: mongo_grider
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - 27117:27017
+    volumes:
+      - ./mongo-data-4.4:/data/db
+    command: --wiredTigerCacheSizeGB 1.5
+
+  redis-server:
+    image: redis
+    container_name: redis_grider
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis_config/redis.conf:/redis.conf
+    command: ['redis-server', '/redis.conf']
+    # expose:
+    #   - 6379
+    # app:
+    #   # some definitions
+    #   # build: ./
+    #   volumes:
+    #     - ./:/var/www/app
+    #   links:
+    #     - redis
+    #   # ports:
+    #   # - 3000:3000
+    #   environment:
+    #     - REDIS_URL=redis://cache
+    #     # - NODE_ENV=development
+    #     # - PORT=5700
+    #     # rest of the environment definitions
+    #   # command:
+    #   #   sh -c 'npm i && node server.js'
+
+  # node:
+  #   image: node:14
+  #   working_dir: /app
+  #   command: npm run dev
+  #   volumes:
+  #     - ./app:/app
+  #   ports:
+  #     - '5700:5700'
+  #   links:
+  #     - redis-server
+  #   restart: unless-stopped
