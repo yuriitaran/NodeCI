@@ -4,14 +4,14 @@
   "private": true,
   "proxy": {
     "/auth/*": {
-      "target": "http://localhost:5000"
+      "target": "http://localhost:5700"
     },
     "/api/*": {
-      "target": "http://localhost:5000"
+      "target": "http://localhost:5700"
     }
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "materialize-css": "^0.100.2",
     "react": "^16.0.0-alpha.13",
     "react-dom": "^16.0.0-alpha.13",
