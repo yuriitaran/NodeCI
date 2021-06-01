@@ -30,7 +30,7 @@ mongoose.Query.prototype.exec = async function () {
 
   // If we do, return that
   if (cacheValue) {
-    console.log('cachedValue', cacheValue);
+    // console.log('cachedValue', cacheValue);
 
     const doc = JSON.parse(cacheValue);
 
@@ -45,4 +45,11 @@ mongoose.Query.prototype.exec = async function () {
   client.hset(this.hashKey, key, JSON.stringify(result), 'EX', 10);
 
   return result;
+};
+
+module.exports = {
+  clearHash(hashKey) {
+    console.log('DELETING KEY');
+    client.del(JSON.stringify(hashKey));
+  },
 };
