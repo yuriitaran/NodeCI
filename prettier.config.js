@@ -1,4 +1,3 @@
-// prettier.config.js or .prettierrc.js
 module.exports = {
   trailingComma: 'none', // "<es5|none|all>"
   tabWidth: 2,
