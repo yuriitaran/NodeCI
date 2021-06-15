@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const redis = require('redis');
 const util = require('util');
+const keys = require('../config/keys');
 
-const redisUrl = 'redis://127.0.0.1:6379';
-const client = redis.createClient(redisUrl);
+const client = redis.createClient(keys.redisUrl);
 client.hget = util.promisify(client.hget);
 const exec = mongoose.Query.prototype.exec;
 
@@ -21,7 +21,7 @@ mongoose.Query.prototype.exec = async function () {
 
   const key = JSON.stringify(
     Object.assign({}, this.getQuery(), {
-      collection: this.mongooseCollection.name,
+      collection: this.mongooseCollection.name
     })
   );
 
@@ -35,7 +35,7 @@ mongoose.Query.prototype.exec = async function () {
     const doc = JSON.parse(cacheValue);
 
     return Array.isArray(doc)
-      ? doc.map((d) => new this.model(d))
+      ? doc.map(d => new this.model(d))
       : new this.model(doc);
   }
 
@@ -51,5 +51,5 @@ module.exports = {
   clearHash(hashKey) {
     console.log('DELETING KEY');
     client.del(JSON.stringify(hashKey));
-  },
+  }
 };
