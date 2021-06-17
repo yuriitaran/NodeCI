@@ -1,11 +1,13 @@
 const AWS = require('aws-sdk');
 const uuid = require('uuid/v4');
 const requireLogin = require('../middlewares/requireLogin');
-const { accessKeyId, secretAccessKey, bucketName } = process.env; // .env
+const { accessKeyId, secretAccessKey, bucketName, region } = process.env;
 
 s3 = new AWS.S3({
+  region,
   accessKeyId,
-  secretAccessKey
+  secretAccessKey,
+  signatureVersion: 'v4'
 });
 
 module.exports = app => {
@@ -17,7 +19,7 @@ module.exports = app => {
       {
         Bucket: bucketName,
         Key: key,
-        ContentType: 'jpeg'
+        ContentType: 'image/jpeg'
       },
       (err, url) => res.send({ key, url })
     );
