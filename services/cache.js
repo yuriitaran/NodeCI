@@ -21,7 +21,7 @@ mongoose.Query.prototype.exec = async function () {
 
   const key = JSON.stringify(
     Object.assign({}, this.getQuery(), {
-      collection: this.mongooseCollection.name
+      collection: this.mongooseCollection.name,
     })
   );
 
@@ -30,12 +30,10 @@ mongoose.Query.prototype.exec = async function () {
 
   // If we do, return that
   if (cacheValue) {
-    // console.log('cachedValue', cacheValue);
-
     const doc = JSON.parse(cacheValue);
 
     return Array.isArray(doc)
-      ? doc.map(d => new this.model(d))
+      ? doc.map((d) => new this.model(d))
       : new this.model(doc);
   }
 
@@ -49,7 +47,6 @@ mongoose.Query.prototype.exec = async function () {
 
 module.exports = {
   clearHash(hashKey) {
-    console.log('DELETING KEY');
     client.del(JSON.stringify(hashKey));
-  }
+  },
 };

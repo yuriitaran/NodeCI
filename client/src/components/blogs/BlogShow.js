@@ -9,7 +9,6 @@ class BlogShow extends Component {
 
   renderImage() {
     if (this.props.blog.imageUrl) {
-      console.log('this.props.blog.imageUrl', this.props.blog.imageUrl);
       return (
         <img
           src={`https://my-blog-bucket-00001.s3.eu-central-1.amazonaws.com/${this.props.blog.imageUrl}`}
